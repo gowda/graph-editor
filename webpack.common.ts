@@ -34,7 +34,7 @@ const config: Configuration = {
     new HtmlWebpackTagsPlugin({
       tags: ['custom.css'],
       append: true,
-      publicPath: '/css',
+      publicPath: 'css',
     }),
   ],
 };
