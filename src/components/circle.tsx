@@ -23,13 +23,32 @@ export default ({ radius }: Props) => {
   const [cx, setCx] = useState<number>(200);
   const [cy, setCy] = useState<number>(200);
   const svgRef = useRef<SVGSVGElement>(null);
+  const [selected, setSelected] = useState<boolean>(false);
 
   useEffect(() => {
     if (svgRef.current) {
       clear(svgRef.current);
-      drawCircle(svgRef.current, radius, cx, cy);
+      drawCircle(svgRef.current, radius, cx, cy)
+        .on('mousedown', () => {
+          setSelected(true);
+        })
+        .on('mouseup', () => {
+          setSelected(false);
+        });
     }
   }, [svgRef, radius, cx, cy]);
+
+  useEffect(() => {
+    if (svgRef.current && selected) {
+      d3.select(svgRef.current).on('mousemove', (event) => {
+        const [x, y] = d3.pointer(event);
+        setCx(x);
+        setCy(y);
+      });
+    } else {
+      d3.select(svgRef.current).on('mousemove', null);
+    }
+  }, [svgRef, selected]);
 
   useEffect(() => {
     if (svgRef.current) {
