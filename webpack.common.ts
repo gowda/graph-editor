@@ -23,13 +23,19 @@ const config: Configuration = {
   resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: process.env.NODE_ENV === 'test' ? '' : '/',
+    publicPath: '',
     filename: 'bundle.js',
   },
   plugins: [
-    new CopyPlugin({patterns: [{ from: 'styles/**/*.css', to: 'css/[name][ext]' }]}),
-    new HtmlWebpackPlugin({template: 'src/index.ejs' }),
-    new HtmlWebpackTagsPlugin({ tags: ['custom.css'], append: true, publicPath: '/css' }),
+    new CopyPlugin({
+      patterns: [{ from: 'styles/**/*.css', to: 'css/[name][ext]' }],
+    }),
+    new HtmlWebpackPlugin({ template: 'src/index.ejs' }),
+    new HtmlWebpackTagsPlugin({
+      tags: ['custom.css'],
+      append: true,
+      publicPath: '/css',
+    }),
   ],
 };
 
